@@ -1,0 +1,19 @@
+{
+  "type": "org.matrix.msc9999.sml", // m.sml
+  "sender": "@alice:example.org",
+  "content": {
+//    "org.matrix.msc1767.text": [
+//      {
+//        "mimetype": "text/plain",
+//        "body": "Fallback text for sml"
+//      }
+//    ],
+    "m.sml": {
+      
+        "@context": "https://schema.org",
+        "@type": "Thing",
+        "name": "something"
+      
+    }
+  }
+}

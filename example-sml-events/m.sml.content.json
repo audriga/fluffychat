@@ -1,0 +1,13 @@
+{
+    "m.text": [
+      {
+        "mimetype": "text/plain",
+        "body": "Fallback text for sml"
+      }
+    ],
+    "m.sml": {
+      "@context": "https://schema.org",
+      "@type": "Thing",
+      "name": "something"
+    }
+  }
