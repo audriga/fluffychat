@@ -51,9 +51,16 @@ dependencies:
   image_picker: ^1.2.1
   intl: any
   just_audio: ^0.10.5
+  jsonld2cards:
+    #    path: ../jsonld2cards-flutter
+    git:
+      url: git@bitbucket.org:audriga/jsonld2cards-flutter.git
   latlong2: ^0.9.1
   linkify: ^5.0.0
-  matrix: ^6.0.0
+  matrix:
+#    path: ../matrix-dart-sdk
+    git:
+      url: git@bitbucket.org:audriga/matrix-dart-sdk.git
   mime: ^2.0.0
   opus_caf_converter_dart: ^1.0.1
   package_info_plus: ^9.0.0

@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
+import 'package:jsonld2cards/card_data.dart';
+import 'package:jsonld2cards/card_rendering.dart';
 import 'package:matrix/matrix.dart';
 
 import 'package:fluffychat/config/setting_keys.dart';
@@ -103,6 +106,7 @@ class MessageContent extends StatelessWidget {
     final fontSize =
         AppConfig.messageFontSize * AppSettings.fontSizeFactor.value;
     final buttonTextColor = textColor;
+    print(event.type);
     switch (event.type) {
       case EventTypes.Message:
       case EventTypes.Encrypted:
@@ -195,6 +199,45 @@ class MessageContent extends StatelessWidget {
               icon: '🔒',
               label: L10n.of(context).encrypted,
               fontSize: fontSize,
+            );
+          case MessageTypes.SML:
+            final formattedText = event.formattedText;
+            Object? decodedJson;
+            try {
+              decodedJson = jsonDecode(formattedText);
+            } on FormatException {
+              decodedJson = null;
+            }
+            if (decodedJson != null) {
+              return renderCardMulti(CardData(decodedJson));
+            }
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: HtmlMessage(
+                html: formattedText,
+                textColor: textColor,
+                room: event.room,
+                fontSize:
+                AppSettings.fontSizeFactor.value *
+                    AppConfig.messageFontSize *
+                    (1),
+                limitHeight: !selected,
+                linkStyle: TextStyle(
+                  color: linkColor,
+                  fontSize:
+                  AppSettings.fontSizeFactor.value *
+                      AppConfig.messageFontSize,
+                  decoration: TextDecoration.underline,
+                  decorationColor: linkColor,
+                ),
+                onOpen: (url) => UrlLauncher(context, url.url).launchUrl(),
+                eventId: event.eventId,
+                checkboxCheckedEvents: event.aggregatedEvents(
+                  timeline,
+                  EventCheckboxRoomExtension.relationshipType,
+                ),
+              ),
             );
           case MessageTypes.Location:
             final geoUri = Uri.tryParse(
@@ -302,6 +345,40 @@ class MessageContent extends StatelessWidget {
           textColor: textColor,
           linkColor: linkColor,
         );
+      case 'm.sml':
+      case 'org.matrix.msc9999.sml':
+        if (event.content["m.sml"] ?? event.content["org.matrix.msc9999.sml"] case final Map<String, dynamic> smlContent) {
+          return renderCardSingle(CardData(smlContent));
+        } else {
+          final html = jsonEncode(event.content);
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: HtmlMessage(
+              html: html,
+              textColor: textColor,
+              room: event.room,
+              fontSize:
+              AppSettings.fontSizeFactor.value *
+                  AppConfig.messageFontSize *
+                  (1),
+              limitHeight: !selected,
+              linkStyle: TextStyle(
+                color: linkColor,
+                fontSize:
+                AppSettings.fontSizeFactor.value *
+                    AppConfig.messageFontSize,
+                decoration: TextDecoration.underline,
+                decorationColor: linkColor,
+              ),
+              onOpen: (url) => UrlLauncher(context, url.url).launchUrl(),
+              eventId: event.eventId,
+              checkboxCheckedEvents: event.aggregatedEvents(
+                timeline,
+                EventCheckboxRoomExtension.relationshipType,
+              ),
+            ),
+          );
+        }
       case EventTypes.CallInvite:
         return FutureBuilder<User?>(
           future: event.fetchSenderUser(),

@@ -80,12 +80,15 @@ class Message extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    print('Event type ${event.type}');
     if (!{
       EventTypes.Message,
       EventTypes.Sticker,
       EventTypes.Encrypted,
       EventTypes.CallInvite,
       PollEventContent.startType,
+      'm.sml',
+      'org.matrix.msc9999.sml'
     }.contains(event.type)) {
       if (event.type.startsWith('m.call.')) {
         return const SizedBox.shrink();
