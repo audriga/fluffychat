@@ -11,6 +11,7 @@ import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/widgets/app_lock.dart';
 import 'package:fluffychat/widgets/theme_builder.dart';
 import '../utils/custom_scroll_behaviour.dart';
+import '../utils/sml/globals.dart' show snackBarKey;
 import 'matrix.dart';
 
 class FluffyChatApp extends StatelessWidget {
@@ -66,6 +67,7 @@ class FluffyChatApp extends StatelessWidget {
             child: testWidget ?? child,
           ),
         ),
+        scaffoldMessengerKey: snackBarKey,
       ),
     );
   }

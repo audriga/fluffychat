@@ -21,6 +21,7 @@ import 'package:fluffychat/widgets/matrix.dart';
 import '../../../config/app_config.dart';
 import '../../../utils/event_checkbox_extension.dart';
 import '../../../utils/platform_infos.dart';
+import '../../../utils/sml/network.dart' show postUrl;
 import '../../../utils/url_launcher.dart';
 import 'audio_player.dart';
 import 'cute_events.dart';
@@ -106,7 +107,6 @@ class MessageContent extends StatelessWidget {
     final fontSize =
         AppConfig.messageFontSize * AppSettings.fontSizeFactor.value;
     final buttonTextColor = textColor;
-    print(event.type);
     switch (event.type) {
       case EventTypes.Message:
       case EventTypes.Encrypted:
@@ -209,7 +209,10 @@ class MessageContent extends StatelessWidget {
               decodedJson = null;
             }
             if (decodedJson != null) {
-              return renderCardMulti(CardData(decodedJson));
+              return renderCardMulti(CardData(
+                  decodedJson,
+                  postFunction: postUrl,
+              ));
             }
 
             return Padding(
@@ -348,7 +351,10 @@ class MessageContent extends StatelessWidget {
       case 'm.sml':
       case 'org.matrix.msc9999.sml':
         if (event.content["m.sml"] ?? event.content["org.matrix.msc9999.sml"] case final Map<String, dynamic> smlContent) {
-          return renderCardSingle(CardData(smlContent));
+          return renderCardSingle(CardData(
+            smlContent,
+            postFunction: postUrl,
+          ));
         } else {
           final html = jsonEncode(event.content);
           return Padding(

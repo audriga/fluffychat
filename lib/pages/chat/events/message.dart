@@ -80,7 +80,6 @@ class Message extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    print('Event type ${event.type}');
     if (!{
       EventTypes.Message,
       EventTypes.Sticker,
