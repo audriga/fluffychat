@@ -52,38 +52,7 @@ pkgs.mkShell {
       mkdir -p "''${PWD}/.android-sdk"
       flutter config --android-sdk "''${PWD}/.android-sdk" &> /dev/null
     fi
-    
-    # Generate a permanent signing key for release builds if not already configured
-    setup_signing_key() {
-      local android_dir="''${PWD}/android"
-      local key_properties="$android_dir/key.properties"
-      local keystore_path="$android_dir/key.jks"
-      
-      if [ ! -f "$keystore_path" ]; then
-        echo "Generating permanent signing key for release builds..."
-        mkdir -p "$android_dir"
-        
-        keytool -genkey -keyalg RSA -alias key -keysize 4096 \
-          -dname "cn=FluffyChat Dev, ou=Development, o=FluffyChat, c=DE" \
-          -keypass FLUFFYCHAT -storepass FLUFFYCHAT \
-          -validity 10950 -keystore "$keystore_path" -storetype "pkcs12" 2>/dev/null
-        
-        # Create key.properties in both android/ and repo root for compatibility
-        echo "storePassword=FLUFFYCHAT" > "$key_properties"
-        echo "keyPassword=FLUFFYCHAT" >> "$key_properties"
-        echo "keyAlias=key" >> "$key_properties"
-        echo "storeFile=$keystore_path" >> "$key_properties"
-        
-        echo "storePassword=FLUFFYCHAT" > "''${PWD}/key.properties"
-        echo "keyPassword=FLUFFYCHAT" >> "''${PWD}/key.properties"
-        echo "keyAlias=key" >> "''${PWD}/key.properties"
-        echo "storeFile=$keystore_path" >> "''${PWD}/key.properties"
-        
-        echo "✓ Signing key generated at $keystore_path"
-      fi
-    }
-    
-    setup_signing_key
+  
     
     # Ensure the nightly rust-src component is available
     rustup toolchain install nightly
