@@ -18,6 +18,8 @@ import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
 import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
+import 'package:matrix/msc_extensions/extension_sml_events/models/sml_event_content.dart';
+import 'package:matrix/msc_extensions/extension_sml_events/sml_event_extension.dart';
 import '../../../config/app_config.dart';
 import '../../../utils/event_checkbox_extension.dart';
 import '../../../utils/platform_infos.dart';
@@ -348,11 +350,11 @@ class MessageContent extends StatelessWidget {
           textColor: textColor,
           linkColor: linkColor,
         );
-      case 'm.sml':
-      case 'org.matrix.msc9999.sml':
-        if (event.content["m.sml"] ?? event.content["org.matrix.msc9999.sml"] case final Map<String, dynamic> smlContent) {
+      case SmlEventContent.type:
+      case SmlEventContent.mscType:
+        if (event.smlEventContent.isMarkupValid) {
           return renderCardSingle(CardData(
-            smlContent,
+            event.smlEventContent.markup,
             postFunction: postUrl,
           ));
         } else {

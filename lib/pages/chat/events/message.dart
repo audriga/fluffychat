@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:matrix/matrix.dart';
+import 'package:matrix/msc_extensions/extension_sml_events/models/sml_event_content.dart';
 import 'package:swipe_to_action/swipe_to_action.dart';
 
 import 'package:fluffychat/config/setting_keys.dart';
@@ -86,8 +87,8 @@ class Message extends StatelessWidget {
       EventTypes.Encrypted,
       EventTypes.CallInvite,
       PollEventContent.startType,
-      'm.sml',
-      'org.matrix.msc9999.sml'
+      SmlEventContent.type,
+      SmlEventContent.mscType,
     }.contains(event.type)) {
       if (event.type.startsWith('m.call.')) {
         return const SizedBox.shrink();

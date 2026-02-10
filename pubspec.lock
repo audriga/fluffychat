@@ -1146,7 +1146,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "6d53d1b62a62a2af63ee1a862a21344120187a50"
+      resolved-ref: bb3c4ab01db8db8fbed40f9813db4f0f75d9c3cf
       url: "git@bitbucket.org:audriga/matrix-dart-sdk.git"
     source: git
     version: "6.0.0"
