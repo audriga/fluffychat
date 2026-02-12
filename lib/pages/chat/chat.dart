@@ -21,6 +21,7 @@ import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/chat/chat_view.dart';
 import 'package:fluffychat/pages/chat/event_info_dialog.dart';
 import 'package:fluffychat/pages/chat/start_poll_bottom_sheet.dart';
+import 'package:fluffychat/pages/chat/send_sml_bottom_sheet.dart';
 import 'package:fluffychat/pages/chat_details/chat_details.dart';
 import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
 import 'package:fluffychat/utils/error_reporter.dart';
@@ -1204,6 +1205,12 @@ class ChatController extends State<ChatPageWithRoom>
           builder: (context) => StartPollBottomSheet(room: room),
         );
         return;
+      case AddPopupMenuActions.sml:
+        showAdaptiveBottomSheet(
+          context: context,
+          builder: (context) => SendSmlBottomSheet(room: room),
+        );
+        return;
       case AddPopupMenuActions.photoCamera:
         openCameraAction();
         return;
@@ -1412,6 +1419,7 @@ enum AddPopupMenuActions {
   video,
   file,
   poll,
+  sml,
   photoCamera,
   videoCamera,
   location,

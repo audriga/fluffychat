@@ -3405,6 +3405,9 @@
     }
   },
   "donate": "Donate",
+  "sendSml": "Send SML",
+  "jsonLdData": "Json-Ld data",
+  "fallbackText": "Fallback text",
   "startedAPoll": "{username} started a poll.",
   "@startedAPoll": {
     "type": "String",

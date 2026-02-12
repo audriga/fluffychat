@@ -371,4 +371,7 @@ class MatrixLocals extends MatrixLocalizations {
 
   @override
   String get pollHasBeenEnded => l10n.pollHasBeenEnded;
+
+  @override
+  String sharedSml(String senderName) => '$senderName sent sml data';
 }
