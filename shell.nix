@@ -25,6 +25,22 @@ pkgs.mkShell {
     openssl
     webkitgtk_4_1
     sysprof
+    libsysprof-capture
+    pcre2
+    libselinux
+    libsepol
+    libgcrypt
+    libthai
+    libdatrie
+    libxdmcp
+    libgpg-error
+    libdeflate
+    lerc
+    libwebp
+    libxkbcommon
+    libepoxy
+    libxtst
+    sqlite
     fribidi
     glib
     
